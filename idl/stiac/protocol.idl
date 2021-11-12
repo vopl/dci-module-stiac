@@ -1,0 +1,112 @@
+/* This file is part of the the dci project. Copyright (C) 2013-2021 vopl, shtoba.
+   This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public
+   License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+   of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+   You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. */
+
+require "remoteEdge.idl"
+require "localEdge.idl"
+
+scope stiac
+{
+    scope protocol
+    {
+        enum State
+        {
+            null        = 0x00,
+            work        = 0x01,
+            pause       = 0x03,
+            fail        = 0x13,
+        }
+
+        enum AutoPumping
+        {
+            none        = 0,  //надо вручную дергать пампер
+            instantly   = 1,  //при любом входящем событии (по умолчанию используется этот режим)
+            delayed     = 2,  //входящие события будут буферизироваться некоторое время, затем оптом будут прокачаны пампером
+        }
+
+        flags Requirements
+        {
+            null                = 0x00,
+
+            //нарезка бинарного потока на отдельные сообщения  (если нет шифрования)
+            cutting             = 0x01,
+
+            //целостность (если нет шифрования)
+            integrity           = 0x03,
+
+            //шифрование (покрывает целостность и нарезку)
+            ciphering           = 0x13,
+
+            //объем данных
+            compression         = 0x20,
+        }
+
+        alias PublicKey = array<uint8, 32>;
+        alias PrivateKey = array<uint8, 32>;
+
+        exception Error {}
+        exception InternalError : Error {}
+        exception BadState : Error {}
+        exception BadRequirements : Error {}
+
+        exception BadRemoteMarker : Error {}
+
+        exception BadRemoteVersion : Error
+        {
+            uint8 version;
+        }
+
+        exception BadRemoteRequirements : Error
+        {
+            Requirements input;
+            Requirements inputOptional;
+            Requirements output;
+        }
+
+        exception MissingRemoteEdge : Error {}
+        exception MissingLocalEdge : Error {}
+        exception DecompressionFail : Error {}
+        exception HandshakeFail : Error {}
+        exception DecipheringFail : Error {}
+        exception IntegrityViolation : Error {}
+        exception LocalEdgeFail : Error {}
+    }
+
+    /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
+    interface Protocol
+    {
+        //текущая версия протокола
+        in getVersion() -> uint32;
+
+        //установить конечные точки
+        in setRemoteEdge(RemoteEdge::Opposite remote);
+
+        //установить требования (наличие обфускатора например...)
+        in setRequirements(
+            protocol::Requirements input,
+            protocol::Requirements inputOptional,
+            protocol::Requirements output);
+
+        //установить заранее известные ключи если есть
+        in setAuthPrologue(bytes prologue);
+        in setAuthLocal(protocol::PrivateKey local);
+
+        in setLocalEdge(LocalEdge::Opposite local);
+
+        in setAutoPumping(protocol::AutoPumping);
+
+        in start();
+        in pump();
+
+        in state() -> protocol::State;
+        out stateChanged(protocol::State state);
+
+        in remoteAuth() -> protocol::PublicKey;
+        out remoteAuthChanged(protocol::PublicKey remote);
+
+        out fail(exception);
+    }
+}
