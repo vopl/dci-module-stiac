@@ -21,7 +21,7 @@ scope stiac::test
 
     interface Victim : Base
     {
-        in  in_withResult() -> void;
+        in  in_withResult() -> none;
         in  in_withResult2() -> uint32;
 
         out out_m1(string arg1, bool arg2) -> string;

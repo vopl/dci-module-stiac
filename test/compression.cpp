@@ -62,7 +62,7 @@ namespace
             _l2->got() += [&](idl::Interface&& i)
             {
                 _i2 = i;
-                return readyFuture<void>();
+                return readyFuture(None{});
             };
 
 

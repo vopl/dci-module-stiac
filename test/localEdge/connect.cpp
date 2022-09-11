@@ -143,7 +143,7 @@ TEST(module_stiac, localEdge_connect)
         Bundle b;
         int cnt1 = 0;
         int cnt2 = 0;
-        b._l2->got() += [&](idl::Interface i) -> Future<>
+        b._l2->got() += [&](idl::Interface i) -> Future<None>
         {
             EXPECT_EQ(0, cnt1);
             EXPECT_EQ(0, cnt2);
@@ -155,7 +155,7 @@ TEST(module_stiac, localEdge_connect)
             //i разрушается
             i = idl::Interface();
 
-            return readyFuture<void>();
+            return readyFuture(None{});
         };
 
         Victim i;
@@ -187,7 +187,7 @@ TEST(module_stiac, localEdge_connect)
 
         idl::Interface holded2;
 
-        b._l2->got() += [&](idl::Interface i) -> Future<>
+        b._l2->got() += [&](idl::Interface i) -> Future<None>
         {
             EXPECT_EQ(0, cnt1);
             EXPECT_EQ(0, cnt2);
@@ -205,7 +205,7 @@ TEST(module_stiac, localEdge_connect)
 
             holded2 = i;//чтобы не уничтожился
 
-            return readyFuture<void>();
+            return readyFuture(None{});
         };
 
         Victim i;

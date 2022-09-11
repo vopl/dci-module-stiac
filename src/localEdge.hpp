@@ -53,7 +53,7 @@ namespace dci::module::stiac
         void finalize(link::Sink& sink, bytes::Alter&& buffer) override;
 
     public:// for Duty
-        cmt::Future<> oppositePutInterface(Interface&& interface);
+        cmt::Future<None> oppositePutInterface(Interface&& interface);
         void oppositeOptimisticPutInterface(Interface&& interface);
 
         void oppositeLinkBeginRemove(link::LocalId localId);

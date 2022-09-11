@@ -47,12 +47,12 @@ namespace dci::module::stiac
                 break;
 
             default:
-                return cmt::readyFuture<>(std::make_exception_ptr(apil::BadState()));
+                return cmt::readyFuture<None>(std::make_exception_ptr(apil::BadState()));
             }
 
             if(!instance)
             {
-                return cmt::readyFuture<>(std::make_exception_ptr(apil::BadArgument("target interface must not be null")));
+                return cmt::readyFuture<None>(std::make_exception_ptr(apil::BadArgument("target interface must not be null")));
             }
 
             ILid identifier = instance.mdLid();
@@ -69,12 +69,12 @@ namespace dci::module::stiac
                 break;
 
             default:
-                return cmt::readyFuture<>(std::make_exception_ptr(apil::BadState()));
+                return cmt::readyFuture<None>(std::make_exception_ptr(apil::BadState()));
             }
 
             if(!instance)
             {
-                return cmt::readyFuture<>(std::make_exception_ptr(apil::BadArgument("target interface must not be null")));
+                return cmt::readyFuture<None>(std::make_exception_ptr(apil::BadArgument("target interface must not be null")));
             }
 
             return _duty.putInterface(std::move(instance), identifier);
@@ -350,7 +350,7 @@ namespace dci::module::stiac
     }
 
     /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
-    cmt::Future<> LocalEdge::oppositePutInterface(Interface&& interface)
+    cmt::Future<None> LocalEdge::oppositePutInterface(Interface&& interface)
     {
         switch(_state)
         {
@@ -361,6 +361,8 @@ namespace dci::module::stiac
             throw link::source::Fail("bad state");
             break;
         }
+
+        return {};
     }
 
     /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7

@@ -31,12 +31,12 @@ scope stiac
         out stateChanged(localEdge::State);
         out fail(exception);
 
-        in put(interface instance) -> void;
-        in putConcrete(interface instance, ilid identifier) -> void;
+        in put(interface instance) -> none;
+        in putConcrete(interface instance, ilid identifier) -> none;
 
         in optimisticPut(interface instance);
         in optimisticPutConcrete(interface instance, ilid identifier);
 
-        out got(interface instance) -> void;
+        out got(interface instance) -> none;
     }
 }

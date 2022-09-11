@@ -23,7 +23,7 @@ namespace dci::module::stiac::localEdge
         Duty(LocalEdge* le);
         ~Duty() override;
 
-        cmt::Future<> putInterface(Interface&& interface, ILid targetIlid);
+        cmt::Future<None> putInterface(Interface&& interface, ILid targetIlid);
         void optimisticPutInterface(Interface&& interface, ILid targetIlid);
 
         void linkBeginRemove(link::LocalId localId);

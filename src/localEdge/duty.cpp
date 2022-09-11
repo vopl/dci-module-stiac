@@ -22,9 +22,9 @@ namespace dci::module::stiac::localEdge
     }
 
     /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
-    cmt::Future<> Duty::putInterface(Interface&& interface, ILid targetIlid)
+    cmt::Future<None> Duty::putInterface(Interface&& interface, ILid targetIlid)
     {
-        return call2Bin<cmt::Future<>>(
+        return call2Bin<cmt::Future<None>>(
                     link::MethodId(3),
                     link::serialization::NonMdInterface{std::move(interface), targetIlid});
     }

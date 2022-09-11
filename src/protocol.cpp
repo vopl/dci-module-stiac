@@ -245,19 +245,22 @@ namespace dci::module::stiac
     /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
     std::vector<uint8> Protocol::protocolMarker()
     {
+        Marker m
+        {
+            ._version = 0,
+            ._inputRequirements = static_cast<uint8>(_paramInputRequirements),
+            ._outputRequirements = static_cast<uint8>(_paramOutputRequirements)
+        };
+
         std::vector<uint8> res(sizeof(Marker));
-        Marker& m = *reinterpret_cast<Marker *>(res.data());
-
-        m._version = 0;
-        m._inputRequirements = static_cast<uint8>(_paramInputRequirements);
-        m._outputRequirements = static_cast<uint8>(_paramOutputRequirements);
-
+        std::memcpy(res.data(), &m, sizeof(Marker));
         return res;
     }
 
     /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
     void Protocol::handshakeProtocolMarker(std::vector<uint8> remote)
     {
+        static_assert(3 == sizeof(Marker));
         if(3 != remote.size())
         {
             if(1 <= remote.size())
@@ -273,7 +276,9 @@ namespace dci::module::stiac
             return;
         }
 
-        Marker& m = *reinterpret_cast<Marker *>(remote.data());
+        Marker m;
+        std::memcpy(&m, remote.data(), sizeof(Marker));
+
         if(m._version != 0)
         {
             apip::BadRemoteVersion e;

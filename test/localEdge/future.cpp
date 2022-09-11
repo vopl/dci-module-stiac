@@ -17,8 +17,8 @@ namespace
         Victim<>            _i1;
         Victim<>::Opposite  _i2;
 
-        Future<void>    _v1;
-        Promise<void>   _v2;
+        Future<None>    _v1;
+        Promise<None>   _v2;
 
         Future<uint32>    _u1;
         Promise<uint32>   _u2;
@@ -39,7 +39,7 @@ namespace
                     return _u2.future();
                 };
 
-                return readyFuture<void>();
+                return readyFuture(None{});
             };
 
 
@@ -67,7 +67,7 @@ TEST(module_stiac, localEdge_future)
                 EXPECT_TRUE(f.resolvedCancel());
                 cnt++;
             };
-            b._v2 = Promise<void>();
+            b._v2 = Promise<None>();
 
             EXPECT_EQ(1, cnt);
         }
@@ -80,7 +80,7 @@ TEST(module_stiac, localEdge_future)
             {
                 cnt++;
             };
-            b._v1 = Future<void>();
+            b._v1 = Future<None>();
 
             EXPECT_EQ(1, cnt);
         }
