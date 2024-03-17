@@ -107,6 +107,6 @@ scope stiac
         in remoteAuth() -> protocol::PublicKey;
         out remoteAuthChanged(protocol::PublicKey remote);
 
-        out fail(exception);
+        out failed(exception);
     }
 }

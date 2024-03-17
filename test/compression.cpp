@@ -29,7 +29,7 @@ namespace
 
             init();
 
-            _l2->fail() += [&](ExceptionPtr e)
+            _l2->failed() += [&](ExceptionPtr e)
             {
                 _fail2 = true;
 
@@ -43,7 +43,7 @@ namespace
                 }
             };
 
-            _l1->fail() += [&](ExceptionPtr e)
+            _l1->failed() += [&](ExceptionPtr e)
             {
                 _fail1 = true;
 

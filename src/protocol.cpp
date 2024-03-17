@@ -167,7 +167,7 @@ namespace dci::module::stiac
 
         //out remoteAutorizationChanged(protocol::Key remotePublic);
 
-        //out fail(exception);
+        //out failed(exception);
     }
 
     /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
@@ -559,7 +559,7 @@ namespace dci::module::stiac
             face->stateChanged(_state);
         }
 
-        face->fail(std::make_exception_ptr(std::move(err)));
+        face->failed(std::make_exception_ptr(std::move(err)));
     }
 
     /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7

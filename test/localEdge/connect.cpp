@@ -95,7 +95,7 @@ TEST(module_stiac, localEdge_connect)
             }
         };
 
-        b._l1->fail() += [&](ExceptionPtr e)
+        b._l1->failed() += [&](ExceptionPtr e)
         {
             try
             {
@@ -107,7 +107,7 @@ TEST(module_stiac, localEdge_connect)
             }
         };
 
-        b._l2->fail() += [&](ExceptionPtr e)
+        b._l2->failed() += [&](ExceptionPtr e)
         {
             try
             {

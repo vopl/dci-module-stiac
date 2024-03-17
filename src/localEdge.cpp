@@ -35,7 +35,7 @@ namespace dci::module::stiac
         };
 
         //out stateChanged(localEdge::State);
-        //out fail(exception);
+        //out failed(exception);
 
         //in put(interface instance) -> void;
         _interface->put() += this * [this](Interface&& instance)
@@ -226,7 +226,7 @@ namespace dci::module::stiac
 
             if(interface)
             {
-                interface->fail(std::make_exception_ptr(apil::BadInput(fail.details())));
+                interface->failed(std::make_exception_ptr(apil::BadInput(fail.details())));
                 interface->stateChanged(apil::State::fail);
             }
         }

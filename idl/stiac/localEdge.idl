@@ -29,7 +29,7 @@ scope stiac
     {
         in state() -> localEdge::State;
         out stateChanged(localEdge::State);
-        out fail(exception);
+        out failed(exception);
 
         in put(interface instance) -> none;
         in putConcrete(interface instance, ilid identifier) -> none;

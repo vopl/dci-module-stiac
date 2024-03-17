@@ -76,7 +76,7 @@ namespace
                 }
             };
 
-            _p2->fail() += [&](ExceptionPtr e)
+            _p2->failed() += [&](ExceptionPtr e)
             {
                 _fail2 = true;
 
@@ -96,7 +96,7 @@ namespace
                 }
             };
 
-            _p1->fail() += [&](ExceptionPtr e)
+            _p1->failed() += [&](ExceptionPtr e)
             {
                 _fail1 = true;
 

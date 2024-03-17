@@ -196,7 +196,7 @@ TEST(module_stiac, localEdge_call)
 
         int fails = 0;
 
-        b._p1->fail() += [&](ExceptionPtr e)
+        b._p1->failed() += [&](ExceptionPtr e)
         {
             fails++;
             try
@@ -209,7 +209,7 @@ TEST(module_stiac, localEdge_call)
             }
         };
 
-        b._p2->fail() += [&](ExceptionPtr e)
+        b._p2->failed() += [&](ExceptionPtr e)
         {
             fails++;
             try
