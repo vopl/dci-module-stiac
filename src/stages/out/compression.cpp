@@ -47,31 +47,6 @@ namespace dci::module::stiac::stages::out
             return false;
         }
 
-        auto handleError = [&](size_t res) -> bool
-        {
-            if(ZSTD_isError(res))
-            {
-                ZSTD_freeCStream(_zcs);
-                _zcs = nullptr;
-
-                _protocol->internalError(this, std::string{"zstd initialization failed: "} + ZSTD_getErrorName(res));
-
-                return true;
-            }
-
-            return false;
-        };
-
-//        if(handleError(ZSTD_CCtx_setParameter(_zcs, ZSTD_p_format, (unsigned)ZSTD_f_zstd1_magicless)))
-//        {
-//            return false;
-//        }
-
-        if(handleError(ZSTD_initCStream(_zcs, ZSTD_CLEVEL_DEFAULT)))
-        {
-            return false;
-        }
-
         return true;
     }
 

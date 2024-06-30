@@ -41,30 +41,6 @@ namespace dci::module::stiac::stages::in
             return false;
         }
 
-        auto handleError = [&](size_t res) -> bool
-        {
-            if(ZSTD_isError(res))
-            {
-                ZSTD_freeDStream(_zds);
-                _zds = nullptr;
-
-                _protocol->internalError(this, std::string{"zstd initialization failed: "}+ZSTD_getErrorName(res));
-                return true;
-            }
-
-            return false;
-        };
-
-//        if(handleError(ZSTD_DCtx_setFormat(_zds, ZSTD_f_zstd1_magicless)))
-//        {
-//            return false;
-//        }
-
-        if(handleError(ZSTD_initDStream(_zds)))
-        {
-            return false;
-        }
-
         return true;
     }
 
